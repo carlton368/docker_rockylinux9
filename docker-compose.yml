@@ -1,0 +1,18 @@
+services:
+  rockylinux:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "2222:22"  # SSH 포트 포워딩
+      - "8080:80"  # 웹 서버 포트 포워딩 (예: Apache)
+    volumes:
+      - ./data:/data  # 호스트와 컨테이너 간 데이터 공유
+    environment:
+      - TZ=Asia/Seoul  # 시간대 설정
+    command: /usr/sbin/init  # systemd 사용
+    privileged: true  # systemd 사용을 위해 필요
+
+networks:
+  default:
+    driver: bridge
